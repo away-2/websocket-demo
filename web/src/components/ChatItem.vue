@@ -7,7 +7,7 @@
           item.type === 'your' ? 'left' : 'right flex-row-reverse',
         ]">
           <!-- 头像 -->
-          <div :class="['avatar', item.type === 'your' ? 'mr-2' : 'ml-2']" @click="handleClickAvatar(item)">
+          <div :class="['avatar', item.type === 'your' ? 'mr-2' : 'ml-2']">
             <div class="w-12 h-12 rounded">
               <img :src="item.avatar" />
             </div>
@@ -43,14 +43,7 @@ interface Props {
   chatData: ChatDataItem[]
 }
 const props = defineProps<Props>()
-const emits = defineEmits(['click-user'])
-const handleClickAvatar = (e: ChatDataItem) => {
-  emits('click-user', {
-    name: e.name,
-    id: e.userId,
-    avatar: e.avatar,
-  })
-}
+
 </script>
 
 <style scoped>

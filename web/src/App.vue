@@ -24,31 +24,18 @@ import { io } from 'socket.io-client'
 // 创建 socket 实例
 const socket = io('ws://localhost:5432')
 
-const chatData = ref([])
+const chatData = ref([]) // 聊天数据
+const userList = ref(new Map()) // 在线用户列表
+const message = ref('') // 当前输入框的消息
+// 当前用户信息
 const curUser = reactive({
   name: '',
   avatar: '',
   id: '',
 })
 
-const userList = ref(new Map())
-const message = ref('')
-const drawerShow = ref(false)
-const userChatData = ref(new Map())
-const chatUserId = ref('')
-const userMessage = ref('')
-
 const handleJoin = (e) => {
   socket.emit('join', Object.assign({}, e))
-}
-
-const handleOpenDrawer = (user) => {
-  chatUserId.value = user.id
-  const u = userList.value.get(chatUserId.value)
-  if (u) {
-    u.new = false
-  }
-  drawerShow.value = true
 }
 
 socket.on('joined', (e) => {
@@ -57,13 +44,13 @@ socket.on('joined', (e) => {
   curUser.name = e.name
 })
 
-// 监听 welcome
+// 监听 welcome 新用户加入
 socket.on('welcome', ({ name, uList }) => {
   uList.forEach((item) => {
     const [id, value] = item
     userList.value.set(id, value)
   })
-
+  // 添加一条欢迎消息到 chatData
   chatData.value.push({
     type: 'tips',
     id: Math.random().toString().split('.')[1].slice(0, 10),
@@ -86,7 +73,7 @@ const handleSend = (v) => {
   socket.emit('send', obj)
 }
 
-// 监听消息的广播
+// 监听群聊消息的广播
 socket.on('message', (e) => {
   const msg = Object.assign({}, e, { type: 'your' })
   chatData.value.push(msg)
