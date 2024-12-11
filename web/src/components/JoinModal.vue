@@ -1,3 +1,22 @@
+<template>
+  <div :class="['modal', isOpen ? 'modal-open' : '']">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg text-center">加入群聊</h3>
+
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">请输入你的名字</span>
+        </label>
+        <input type="text" placeholder="your name" v-model="name" class="input input-bordered w-full"
+          @keyup.enter="handleJoin" />
+      </div>
+      <div class="modal-action justify-center">
+        <label for="my-modal" class="btn px-8" @click="handleJoin">进入</label>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import avatarList from './../assets/avatar'
@@ -30,26 +49,3 @@ const handleJoin = () => {
   isOpen.value = false
 }
 </script>
-<template>
-  <div :class="['modal', isOpen ? 'modal-open' : '']">
-    <div class="modal-box">
-      <h3 class="font-bold text-lg text-center">加入群聊</h3>
-
-      <div class="form-control w-full">
-        <label class="label">
-          <span class="label-text">请输入你的名字</span>
-        </label>
-        <input
-          type="text"
-          placeholder="your name"
-          v-model="name"
-          class="input input-bordered w-full"
-          @keyup.enter="handleJoin"
-        />
-      </div>
-      <div class="modal-action justify-center">
-        <label for="my-modal" class="btn px-8" @click="handleJoin">进入</label>
-      </div>
-    </div>
-  </div>
-</template>

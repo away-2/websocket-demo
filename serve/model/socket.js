@@ -33,7 +33,7 @@ export const socketServer = io => {
     // 用户离开
     socket.on('disconnecting', () => {
       const bool = userList.delete(socket.id)
-      // 如果有用户离开，在进行广播（因为只打开页面不进入关闭页面也会触发这个事件）
+      // 如果有用户离开，再进行广播（因为只打开页面不进入关闭页面也会触发这个事件）
       bool && socket.broadcast.emit('quit', socket.id)
     })
   })

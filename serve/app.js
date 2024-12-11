@@ -7,7 +7,7 @@ socketServer(io)
 // io.on('connection', socket => {
 //   console.log('连接成功')
 
-//   // receive a message from the client
+//   // 从客户端收到消息
 //   socket.on('send', e => {
 //     console.log(e)
 //     socket.emit('back', '服务器返回的消息')
